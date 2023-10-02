@@ -1,23 +1,24 @@
-<%- include('partials/header') %>
-<%- include('partials/navbar') %>
+<%- include('partials/header') %> 
+<%- include('partials/navbar') %> 
 
 <div class="container">
     <div class="card">
         <div class="card-header">
-            <h3>Cadastro de Produto</h3>
+            Cadastro de Produto
         </div>
         <div class="card-body">
             <form action="/salvarProduto" method="post">
-                <label>Nome</label>
-                <input type="text" name="nome" id="nomeProd" placeholder="Digite um nome..." class="form-control"><br/>
+                <label>Titulo</label>
+                <input type="text" name="titulo" id="tituloProd"
+                class="form-control">
                 <label>Descrição</label>
-                <textarea name="descricao" id="descProd" placeholder="Descreva seu produto..." cols="30" rows="10" class="form-control">
-                </textarea><br/>
+                <textarea name="descricao" id="descProd"
+                class="form-control" cols="30" rows="10"></textarea>
                 <button class="btn btn-primary">Salvar</button>
             </form>
         </div>
-    </div>
 
+    </div>
 </div>
 
-<%- include('partials/footer') %>
+<%- include('partials/footer') %> 

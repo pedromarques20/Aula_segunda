@@ -1,61 +1,54 @@
 const express = require("express");
 const app = express();
-const bodyParser = require('body-parser'); 
+const bodyParser = require("body-parser");
 const connection = require("./database/database");
+
+const Produto = require("./database/Produto");
 
 connection
     .authenticate()
     .then(()=>{
-        console.log("Conexão feita com o banco de dados.")
+        console.log("conexao feita com o db");
     })
     .catch((msgErro)=>{
         console.log(msgErro);
     })
-    
 
-app.use(bodyParser.urlencoded({extended: false}));
+app.use(bodyParser.urlencoded({extended : false}));
 app.use(bodyParser.json());
 
-// Express usar o EJS como view engine
+//EJS como view engine
 app.set('view engine', 'ejs');
 
+//definindo a pasta de arquivos estaticos
 app.use(express.static('public'));
 
-app.listen(8080, () => {
+app.listen(8080, ()=>{
     console.log("app rodando");
 });
 
-app.get("/", (req, res) => {
-    var exibirNome = true;
-    var nome = "Pedro marques";
-    var idade = 20; 
-    var produtos = [
-        {nome: "Abacaxi", preco: 3},
-        {nome: "Mamão", preco: 2},
-        {nome: "Treloso Black", preco: 2.70}
-    ]
-    res.render("index", {
-        exibiNome: exibirNome,
-        nome: nome,
-        idade: idade,
-        produtos: produtos
-    });
+app.get("/", (req, res)=>{
+    res.render("index");
 });
 
-app.get("/usuario", (req, res) => {
-    res.send("Oi usuário!");
-});
-
-app.get("/produto", (req, res) => {
+app.get("/produto", (req, res)=>{
     res.render("produto");
 });
 
-app.post("/salvarProduto", (req, res) => {
-    var nome = req.body.nome;
+app.post("/salvarProduto", (req, res)=>{
+    var titulo = req.body.titulo;
     var descricao = req.body.descricao;
-    res.send("Form recebido: "+nome+"<br/> Descrição: "+descricao);
+    Produto.create({
+        titulo: titulo,
+        descricao: descricao
+    }).then(()=>{
+        res.redirect("/");
+    });
 });
 
-app.get("/produtolist", (req, res)=>{
-    Produto.findall();
-})
+app.get("/produtoslist", (req, res)=>{
+    Produto.findall().then(produtos=>{
+        console.log(produtos);
+    });
+    res.render("index");
+});
