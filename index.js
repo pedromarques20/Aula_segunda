@@ -55,3 +55,7 @@ app.post("/salvarProduto", (req, res) => {
     var descricao = req.body.descricao;
     res.send("Form recebido: "+nome+"<br/> Descrição: "+descricao);
 });
+
+app.get("/produtolist", (req, res)=>{
+    Produto.findall();
+})
