@@ -24,3 +24,5 @@ router.get("/produtoslist", (req, res)=>{
     });
     res.render("index");
 });
+
+module.exports = router
