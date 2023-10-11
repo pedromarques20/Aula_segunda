@@ -1,14 +1,46 @@
 <%- include('../partials/header') %>
 <%- include('../partials/navbar') %>
 
-
 <div class="container">
+    <hr>
+    <h2>Produtos</h2>
+    <a href="/produto/novo" class="btn btn-success">
+        Criar novo Produto</a>
+    <hr>
 
-    <% produtos.forEach(produto=> {c %>
-        <p><%=  produto.titulo %></p>
-        <p><%=  produto.descricao %></p>
-
-<% }) %>
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                <th>Título</th>
+                <th>Descrição</th>
+                <th>Ações</th>
+            </tr>
+        </thead>
+        <tbody>
+            <% produtos.forEach(produto=> { %>
+                <tr>
+                    <td><%=  produto.titulo %></td>
+                    <td><%=  produto.descricao %></td>
+                    <td>
+                        <a href="/produtos/edit/<%= produto.id %>" class="btn btn-warning">Editar</a>
+                        <form action="/produto/delete" method="post" onsubmit="confirmardeleçao(event, form)">
+                            <input type="hidden" name="id" value="<%=  produto.id %>">
+                            <button class="btn btn-danger">Deletar</button>
+                        </form>
+                    </td>
+                </tr>
+            <% }) %>
+        </tbody>
+    </table>
 </div>
 
 <%- include('../partials/footer') %>
+<script>
+    function confirmardeleçao(event, form){
+        event.preventDefault();
+        var decision = confirm("Você deseja deletar este produto?");
+        if(decision){
+            form.submit();
+        }
+    }
+</script>
